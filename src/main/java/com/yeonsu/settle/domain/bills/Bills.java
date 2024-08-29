@@ -1,5 +1,6 @@
 package com.yeonsu.settle.domain.bills;
 
+import com.yeonsu.settle.domain.BaseTimeEntity;
 import com.yeonsu.settle.domain.user.User;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,7 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 @DynamicUpdate // 변경한 필드만 대응
 @Entity
-public class Bills {
+public class Bills extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
