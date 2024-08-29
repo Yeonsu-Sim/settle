@@ -104,7 +104,7 @@ public class BillsApiControllerTest {
         String expectedPayer = "연화";
 
         BillsUpdateRequestDto requestDto = BillsUpdateRequestDto.builder()
-                .product(expectedProduct)p
+                .product(expectedProduct)
                 .amount(amount)
                 .payer(expectedPayer)
                 .participants(participants)
