@@ -1,11 +1,41 @@
 {{>layout/header}}
+
     <h1>Settle the Payment!</h1>
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-6">
                 <a href="/bills/save" role="button"
-                   class="btn vtn-primary">글 등록</a>
+                   class="btn vtn-primary">영수증 등록</a>
             </div>
         </div>
+        <br>
+        <!-- 목록 출력 영역 -->
+        <table class="table table-horizontal table-bordered">
+            <thead class="thead-strong">
+            <tr>
+                <th>번호</th>
+                <th>품목명</th>
+                <th>금액</th>
+                <th>결제자</th>
+                <th>참여자</th>
+                <th>결제일</th>
+                <th>메모</th>
+            </tr>
+            </thead>
+            <tbody id="tbody">
+            {{#bills}}
+                <tr>
+                    <td>{{id}}</td>
+                    <td>{{product}}</td>
+                    <td>{{amount}}</td>
+                    <td>{{payer}}</td>
+                    <td>{{participants}}</td>
+                    <td>{{dateTime}}</td>
+                    <td>{{memo}}</td>
+                </tr>
+            {{/bills}}
+            </tbody>
+        </table>
     </div>
+
 {{>layout/footer}}
