@@ -17,26 +17,18 @@
                 <label for="payer">결제자</label>
                 <input type="text" class="form-control" id="payer" placeholder="결제자를 입력하세요" required>
             </div>
-<!--            <div class="form-group">-->
-<!--                <label for="participants">참여자</label>-->
-<!--                <input type="text" class="form-control" id="participants" placeholder="참여자를 입력하세요" required>-->
-<!--            </div>-->
-            <div id="participants-list">
+            <div class="form-group" id="participants-list">
                 <label for="participants">참여자</label>
-                <input type="text" name="participants[]" placeholder="Enter participant" required><br>
+                <input type="text" name="participants[]" placeholder="참여자를 입력하세요" required><br>
             </div>
-            <button type="button" id="add-participant">Add Participant</button><br>
+            <button type="button" id="add-participant">참여자 추가</button><br>
             <div class="form-group">
                 <label for="dateTime">결제일</label>
                 <input type="datetime-local" class="form-control" id="dateTime" placeholder="결제일을 입력하세요" required>
             </div>
-<!--            <div class="form-group">-->
-<!--                <label for="memo">메모</label>-->
-<!--                <textarea class="form-control" id="memo" placeholder="메모를 자유롭게 입력하세요"></textarea>-->
-<!--            </div>-->
             <div class="form-group">
                 <label for="memo">메모</label>
-                <input type="text" class="form-control" id="memo" placeholder="메모를 자유롭게 입력하세요">
+                <textarea class="form-control" id="memo" placeholder="메모를 자유롭게 입력하세요"></textarea>
             </div>
         </form>
         <a href="/" role="button" class="btn btn-secondary">취소</a>

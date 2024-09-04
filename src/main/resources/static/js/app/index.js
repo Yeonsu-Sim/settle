@@ -6,7 +6,7 @@ var main = {
         });
 
         $('#add-participant').on('click', function() {
-            $('#participants-list').append('<input type="text" name="participants[]" placeholder="Enter participant"><br>');
+            $('#participants-list').append('<input type="text" name="participants[]" placeholder="참여자를 입력하세요"><br>');
         });
     },
     save: function () {
