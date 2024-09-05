@@ -34,6 +34,14 @@ public class BillsService {
         return id;
     }
 
+    @Transactional
+    public void delete(Long id) {
+        Bills bills = billsRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 영수증이 없습니다. id=" + id));
+
+        billsRepository.delete(bills);
+    }
+
     @Transactional(readOnly = true)  // 트랜잭션 범위는 유지하되, 조회 기능만 남김 -> 조회 속도 개선
     public BillsResponseDto findById(Long id) {
         Bills entity = billsRepository.findById(id)

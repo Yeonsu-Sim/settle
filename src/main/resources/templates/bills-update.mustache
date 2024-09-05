@@ -1,0 +1,46 @@
+{{>layout/header}}
+
+<h1>영수증 수정</h1>
+
+<div class="col-md-12">
+    <div class="col-md-4">
+        <form>
+            <div class="form-group">
+                <label for="title">영수증 번호</label>
+                <input type="text" class="form-control" id="id" value="{{bill.id}}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="product">품목명</label>
+                <input type="text" class="form-control" id="product" value="{{bill.product}}" placeholder="품목명을 입력하세요" required>
+            </div>
+            <div class="form-group">
+                <label for="amount">금액</label>
+                <input type="number" class="form-control" id="amount" value="{{bill.amount}}" placeholder="금액을 입력하세요" required>
+            </div>
+            <div class="form-group">
+                <label for="payer">결제자</label>
+                <input type="text" class="form-control" id="payer" value="{{bill.payer}}" placeholder="결제자를 입력하세요" required>
+            </div>
+            <div class="form-group" id="participants-list">
+                <label for="participants">참여자</label>
+                {{#bill.participants}}
+                    <input type="text" name="participants[]" value="{{.}}" placeholder="참여자를 입력하세요" required><br>
+                {{/bill.participants}}
+            </div>
+            <button type="button" id="add-participant">참여자 추가</button><br>
+            <div class="form-group">
+                <label for="dateTime">결제일</label>
+                <input type="datetime-local" class="form-control" id="dateTime" value="{{bill.dateTime}}" placeholder="결제일을 입력하세요" required>
+            </div>
+            <div class="form-group">
+                <label for="memo">메모</label>
+                <textarea class="form-control" id="memo" placeholder="메모를 자유롭게 입력하세요">{{bill.memo}}</textarea>
+            </div>
+        </form>
+        <a href="/" role="button" class="btn btn-secondary">취소</a>
+        <button type="button" class="btn btn-primary" id="btn-update">수정 완료</button>
+        <button type="button" class="btn btn-danger" id="btn-delete">삭제</button>
+    </div>
+</div>
+
+{{>layout/footer}}

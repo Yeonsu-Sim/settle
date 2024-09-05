@@ -22,6 +22,12 @@ public class BillsApiController {
         return billsService.update(id, requestDto);
     }
 
+    @DeleteMapping("/api/v1/bills/{id}")
+    public Long delete(@PathVariable("id") Long id) {
+        billsService.delete(id);
+        return id;
+    }
+
     @GetMapping("/api/v1/bills/{id}")
     public BillsResponseDto findById(@PathVariable("id") Long id) {
         return billsService.findById(id);
