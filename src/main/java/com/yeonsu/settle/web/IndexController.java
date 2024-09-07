@@ -1,7 +1,10 @@
 package com.yeonsu.settle.web;
 
+import com.yeonsu.settle.config.auth.LoginUser;
+import com.yeonsu.settle.config.auth.dto.SessionUser;
 import com.yeonsu.settle.service.bills.BillsService;
 import com.yeonsu.settle.web.dto.BillsResponseDto;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,10 +15,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 public class IndexController {
     private final BillsService billsService;
+    private final HttpSession httpSession;
 
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(Model model, @LoginUser SessionUser user) {  // @LoginUser annotation 제작
         model.addAttribute("bills", billsService.findAllDesc());
+
+        if (user != null) {
+            model.addAttribute("userName", user.getName());
+        }
         return "index";
     }
 
