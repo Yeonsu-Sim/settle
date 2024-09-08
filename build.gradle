@@ -27,8 +27,6 @@ dependencies {
     runtimeOnly 'com.h2database:h2'
     implementation('org.springframework.boot:spring-boot-starter-mustache')
     implementation('org.springframework.boot:spring-boot-starter-oauth2-client')
-}
-
-tasks.named('test') {
-    useJUnitPlatform()
+    testImplementation("org.springframework.security:spring-security-test")
+    testImplementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 }
