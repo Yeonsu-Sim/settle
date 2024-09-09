@@ -17,7 +17,16 @@ public class IndexController {
     private final BillsService billsService;
     private final HttpSession httpSession;
 
+
     @GetMapping("/")
+    public String home(Model model, @LoginUser SessionUser user) {
+        if (user != null) {
+            return "redirect:/index";
+        }
+        return "login";
+    }
+
+    @GetMapping("/index")
     public String index(Model model, @LoginUser SessionUser user) {  // @LoginUser annotation 제작
         model.addAttribute("bills", billsService.findAllDesc());
 
