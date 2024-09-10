@@ -1,10 +1,13 @@
 package com.yeonsu.settle.domain.user;
 
 import com.yeonsu.settle.domain.BaseTimeEntity;
+import com.yeonsu.settle.domain.group.Group;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.Set;
 
 @Getter
 @NoArgsConstructor
@@ -30,6 +33,9 @@ public class User extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+
+    @ManyToMany(mappedBy = "members")
+    private Set<Group> groups;
 
     @Builder
     public User(String name, String email, String picture, Role role) {

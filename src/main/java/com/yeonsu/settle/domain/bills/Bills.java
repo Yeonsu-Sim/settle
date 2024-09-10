@@ -1,22 +1,18 @@
 package com.yeonsu.settle.domain.bills;
 
 import com.yeonsu.settle.domain.BaseTimeEntity;
+import com.yeonsu.settle.domain.group.Group;
 import com.yeonsu.settle.domain.user.User;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @NoArgsConstructor
@@ -27,17 +23,25 @@ public class Bills extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    private Group group;
+
     @Column(length = 500, nullable = false)
     private String product;
 
     @Column(nullable = false)
     private Long amount;
 
-    @Column(nullable = false)
-    private String payer;
+    @ManyToOne
+    private User payer;
 
-    @Column(nullable = false)
-    private List<String> participants;
+    @ManyToMany
+    @JoinTable(
+            name = "bill_participants",
+            joinColumns = @JoinColumn(name = "bill_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<User> participants;
 
     @Column(nullable = false)
     private LocalDateTime dateTime;
@@ -46,7 +50,8 @@ public class Bills extends BaseTimeEntity {
     private String memo;
 
     @Builder
-    public Bills(String product, Long amount, String payer, List<String> participants, LocalDateTime dateTime, String memo) {
+    public Bills(Group group, String product, Long amount, User payer, Set<User> participants, LocalDateTime dateTime, String memo) {
+        this.group = group;
         this.product = product;
         this.amount = amount;
         this.payer = payer;
@@ -56,7 +61,7 @@ public class Bills extends BaseTimeEntity {
 
     }
 
-    public void update(String product, Long amount, String payer, List<String> participants, LocalDateTime dateTime, String memo) {
+    public void update(String product, Long amount, User payer, Set<User> participants, LocalDateTime dateTime, String memo) {
         this.product = product;
         this.amount = amount;
         this.payer = payer;
