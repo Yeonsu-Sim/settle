@@ -1,15 +1,23 @@
 package com.yeonsu.settle.domain.bills;
 
+import com.yeonsu.settle.domain.group.Group;
+import com.yeonsu.settle.domain.group.GroupRepository;
+import com.yeonsu.settle.domain.user.Role;
+import com.yeonsu.settle.domain.user.User;
+import com.yeonsu.settle.domain.user.UserRepository;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -19,6 +27,10 @@ public class BillsRepositoryTest {
 
     @Autowired
     BillsRepository billsRepository;
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
+    GroupRepository groupRepository;
 
     @After
     public void cleanup() {
@@ -30,15 +42,21 @@ public class BillsRepositoryTest {
         // given
         String product = "테스트 영수증";
         Long amount = 10000L;
-        String payer = "연수";
+
+        User payer = User.builder().name("연수").email("shenlianxiu@gmail.com").role(Role.GUEST).picture("this is not a picture yet").build();
+        userRepository.save(payer);
+
         LocalDateTime dateTime = LocalDateTime.now();
 
-        List<String> participants = new ArrayList<String>();
-        participants.add("연수");
-        participants.add("연화");
-        participants.add("윤성");
+        Set<User> participants = new HashSet<>();
+        participants.add(payer);
+
+        Group group = Group.builder().name("테스트 그룹").members(participants).build();
+        groupRepository.save(group);
+
 
         billsRepository.save(Bills.builder()
+                .group(group)
                 .product(product)
                 .amount(amount)
                 .payer(payer)
@@ -53,7 +71,7 @@ public class BillsRepositoryTest {
         // then
         Bills bills = billsList.get(0);
         assertThat(bills.getProduct()).isEqualTo(product);
-        assertThat(bills.getPayer()).isEqualTo(payer);
+        assertThat(bills.getPayer().getName()).isEqualTo(payer.getName());
     }
 
     @Test
@@ -63,15 +81,21 @@ public class BillsRepositoryTest {
 
         String product = "테스트 영수증";
         Long amount = 10000L;
-        String payer = "연수";
+
+        User payer = User.builder().name("연수").email("shenlianxiu@gmail.com").role(Role.GUEST).picture("this is not a picture yet").build();
+        userRepository.save(payer);
+
         LocalDateTime dateTime = LocalDateTime.now();
 
-        List<String> participants = new ArrayList<String>();
-        participants.add("연수");
-        participants.add("연화");
-        participants.add("윤성");
+        Set<User> participants = new HashSet<>();
+        participants.add(payer);
+
+        Group group = Group.builder().name("테스트 그룹").members(participants).build();
+        groupRepository.save(group);
+
 
         billsRepository.save(Bills.builder()
+                .group(group)
                 .product(product)
                 .amount(amount)
                 .payer(payer)
