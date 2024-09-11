@@ -34,11 +34,23 @@ public class Group extends BaseTimeEntity {
 
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<Bills> bills;
+    private List<Bills> bills = new ArrayList<>();
 
     @Builder
     public Group(String name, Set<User> members) {
         this.name = name;
         this.members = members;
+
+        for (User member:members) {
+            member.addGroup(this);
+        }
+    }
+
+    public void addBill(Bills bill) {
+        bills.add(bill);
+    }
+
+    public void removeBill(Bills bill) {
+        bills.remove(bill);
     }
 }

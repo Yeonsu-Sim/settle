@@ -14,9 +14,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,9 +35,12 @@ public class BillsRepositoryTest {
     @After
     public void cleanup() {
         billsRepository.deleteAll();
+        groupRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Test
+    @Transactional
     public void 영수증저장_불러오기() {
         // given
         String product = "테스트 영수증";
@@ -66,12 +69,18 @@ public class BillsRepositoryTest {
                 .build());
 
         // when
-        List<Bills> billsList = billsRepository.findAll();
+        List<Bills> billList = billsRepository.findAll();
+        Optional<Group> og = groupRepository.findById(group.getId());
 
         // then
-        Bills bills = billsList.get(0);
-        assertThat(bills.getProduct()).isEqualTo(product);
-        assertThat(bills.getPayer().getName()).isEqualTo(payer.getName());
+        Bills bill = billList.get(0);
+        assertThat(bill.getProduct()).isEqualTo(product);
+        assertThat(bill.getPayer().getName()).isEqualTo(payer.getName());
+
+        if (og.isPresent()) {
+            assertThat(og.get().getName()).isEqualTo(group.getName());
+            assertThat(og.get().getBills().contains(bill)).isEqualTo(true);
+        }
     }
 
     @Test

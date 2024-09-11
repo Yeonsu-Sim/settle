@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -21,7 +22,7 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
 //    @Column(nullable = false)
@@ -35,7 +36,7 @@ public class User extends BaseTimeEntity {
     private Role role;
 
     @ManyToMany(mappedBy = "members")
-    private Set<Group> groups;
+    private Set<Group> groups = new HashSet<>();
 
     @Builder
     public User(String name, String email, String picture, Role role) {
@@ -49,8 +50,15 @@ public class User extends BaseTimeEntity {
     public User update(String name, String picture) {
         this.name = name;
         this.picture = picture;
-
         return this;
+    }
+
+    public void addGroup(Group group) {
+        groups.add(group);
+    }
+
+    public void removeGroup(Group group) {
+        groups.remove(group);
     }
 
     public String getRoleKey() {

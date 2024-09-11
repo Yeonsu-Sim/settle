@@ -59,6 +59,7 @@ public class Bills extends BaseTimeEntity {
         this.dateTime = dateTime;
         this.memo = memo;
 
+        group.addBill(this);
     }
 
     public void update(String product, Long amount, User payer, Set<User> participants, LocalDateTime dateTime, String memo) {
